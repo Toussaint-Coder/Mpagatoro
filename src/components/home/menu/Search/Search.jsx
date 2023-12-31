@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import Card from "../../../ReUsable/Card"
 import {stations} from "../../../stations/stations"
 import Pump from "../../../../assets/pump.svg"
@@ -6,10 +6,21 @@ import CarIco from "../../../../assets/car.svg"
 import Button from "../../../ReUsable/Button"
 
 const Search = ({SearchHandler}) => {
-  useEffect(() => {}, [SearchHandler])
+  const [query, setQuery] = useState(null)
+  useEffect(() => {
+    let Result = []
+    stations.forEach((station) => {
+      if (
+        station.name.toLowerCase().indexOf(SearchHandler.toLowerCase()) > -1
+      ) {
+        Result.push(station)
+        setQuery(Result)
+      }
+    })
+  }, [SearchHandler])
   return (
-    <Card className="flex-col max-h-80 w-80 mt-2 absolute rounded-lg z-50">
-      <div className="my-4">
+    <Card className="flex-col max-h-80 max-w-xs w-full mt-2 absolute rounded-lg">
+      <div className="w-full">
         <p className="text-white">Results for "Stations"</p>
       </div>
       <div className="overflow-auto w-full scroll-sm thumb-sm">

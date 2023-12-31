@@ -13,7 +13,7 @@ const Menu = () => {
 
   return (
     <>
-      <div className="absolute top-0 p-4 w-full z-20">
+      <div className="absolute top-0 p-4 w-full z-30">
         <div className="flex justify-between items-baseline">
           <div>
             <Card>
