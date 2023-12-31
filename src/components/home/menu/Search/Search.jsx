@@ -8,11 +8,11 @@ import Button from "../../../ReUsable/Button"
 const Search = ({SearchHandler}) => {
   useEffect(() => {}, [SearchHandler])
   return (
-    <Card className="flex-col max-h-80 w-80 mt-2 rounded absolute rounded-lg">
+    <Card className="flex-col max-h-80 w-80 mt-2 absolute rounded-lg z-50">
       <div className="my-4">
         <p className="text-white">Results for "Stations"</p>
       </div>
-      <div className="overflow-auto w-full">
+      <div className="overflow-auto w-full scroll-sm thumb-sm">
         {stations.map((station) => (
           <div
             className="w-full flex justify-between items-center shadow-lg p-2 rounded-lg"
