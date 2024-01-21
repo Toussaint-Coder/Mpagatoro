@@ -75,14 +75,14 @@ const Menu = () => {
             <Card className={"flex-col"}>
               <div>
                 <Button
-                  className="bg-zinc-800 text-white flex items-center gap-2"
+                  className="bg-zinc-800 text-white flex items-center"
                   onClick={handlerLoginWithGoogle}
                 >
                   <img
-                    className="w-5 mr-2"
+                    className="w-5"
                     src="https://www.svgrepo.com/show/475656/google-color.svg"
                   />
-                  <span>Login With Google</span>
+                  <span>Login</span>
                 </Button>
               </div>
             </Card>
