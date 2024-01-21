@@ -75,7 +75,7 @@ const Menu = () => {
             <Card className={"flex-col"}>
               <div>
                 <Button
-                  className="bg-zinc-800 text-white flex items-center"
+                  className="bg-zinc-800 text-white flex items-center gap-1"
                   onClick={handlerLoginWithGoogle}
                 >
                   <img
