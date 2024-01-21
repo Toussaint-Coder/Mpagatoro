@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css"
 import Pump from "../../../assets/pump.svg"
 import ProfileIc from "../../../assets/Profile.svg"
 import location from "../../../assets/location.svg"
+import Target from "../../../assets/target.svg"
 import CarIco from "../../../assets/car.svg"
 import {
   MapContainer,
@@ -57,7 +58,7 @@ const Map = ({handlerLocation, HandlerAddedLOcation}) => {
         onClick={ScrollToLocation}
       >
         <span>Find Me</span>
-        <img src={location} className="w-4" alt="icon" />
+        <img src={Target} className="w-4" alt="icon" />
       </Button>
       <MapContainer
         center={handlerLocation}

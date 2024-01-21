@@ -35,33 +35,36 @@ const Active = ({handlerStationLocation}) => {
         </div>
       </div>
       <div className="h-full w-full space-y-4 overflow-auto scroll-sm thumb-sm">
-        {stations.map((station) => (
-          <div
-            className="w-full flex justify-between items-center overflow-auto shadow-lg p-2 rounded-lg"
-            key={station.coords.join(".").toString()}
-          >
-            <div className="flex gap-1">
-              <img src={Pump} alt="pumpIco" className="w-8" />
-              <div>
-                <p className="text-sm text-white">{station.name}</p>
-                <p className="text-xs text-white/50">
-                  from : {station.time.join(":")}
-                </p>
-              </div>
-            </div>
-            <div>
-              <Button
-                className="bg-green-800 flex items-center gap-2"
-                onClick={() => {
-                  getPositionCoords(station.coords)
-                }}
+        {stations.map(
+          (station) =>
+            station.status === "Active" && (
+              <div
+                className="w-full flex justify-between items-center overflow-auto border border-white/10 p-2 rounded-lg"
+                key={station.coords.join(".").toString()}
               >
-                <img src={CarIco} alt="pumpIco" className="w-5" />
-                <span>start</span>
-              </Button>
-            </div>
-          </div>
-        ))}
+                <div className="flex gap-1">
+                  <img src={Pump} alt="pumpIco" className="w-8" />
+                  <div>
+                    <p className="text-sm text-white">{station.name}</p>
+                    <p className="text-xs text-white/50">
+                      from : {station.time.join(":")}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <Button
+                    className="bg-green-800 flex items-center gap-2"
+                    onClick={() => {
+                      getPositionCoords(station.coords)
+                    }}
+                  >
+                    <img src={CarIco} alt="pumpIco" className="w-5" />
+                    <span>start</span>
+                  </Button>
+                </div>
+              </div>
+            )
+        )}
       </div>
     </Card>
   )
