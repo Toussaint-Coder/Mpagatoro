@@ -51,6 +51,7 @@ const Map = ({handlerLocation, HandlerAddedLOcation}) => {
       Mymap.current.flyTo(handlerLocation, 15)
     }
   }
+  const UserInfo = JSON.parse(localStorage.getItem("UserInfo"))
   return (
     <>
       <Button
@@ -63,13 +64,12 @@ const Map = ({handlerLocation, HandlerAddedLOcation}) => {
       <MapContainer
         center={handlerLocation}
         zoom={15}
+        rotate={true}
         className="w-full h-full z-10 top-0 sticky bg-zinc-800"
         zoomControl={false}
         ref={Mymap}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {/* hendler the line */}
-        <Polyline positions={polylinePositions} color="black" />
 
         {/* handler stations */}
         {stations.map((stations) => (
@@ -85,7 +85,7 @@ const Map = ({handlerLocation, HandlerAddedLOcation}) => {
               >
                 <div className="flex gap-1">
                   <img src={Pump} className="w-5" alt="pumpIcon" />
-                  <span className="text-sm font-bold">{stations.name}</span>
+                  <span className="text-sm">{stations.name}</span>
                 </div>
                 <span className="text-xs text-green-800 font-semibold">
                   {stations.status}
@@ -96,23 +96,37 @@ const Map = ({handlerLocation, HandlerAddedLOcation}) => {
         ))}
 
         {/* handler my position */}
-        <Marker position={handlerLocation} icon={UserIcon}>
-          <Popup autoClose={false}>
-            <div className="flex gap-1 items-center flex-col w-28 p-2">
-              <div className="flex gap-1">
-                <img src={ProfileIc} className="w-5" alt="profileIcon" />
-                <span className="text-xs font-bold">Toussaint</span>
-              </div>
-            </div>
-          </Popup>
-        </Marker>
-        <Circle
-          center={handlerLocation}
-          radius={100}
-          color="#2d3748"
-          fillColor="#2d3748"
-          fillOpacity={0.4}
-        />
+
+        {UserInfo && (
+          <>
+            {/* hendler the line */}
+
+            <Polyline positions={polylinePositions} color="black" />
+            <Marker position={handlerLocation} icon={UserIcon}>
+              <Popup autoClose={false}>
+                <div className="flex gap-1 items-center flex-col w-28 p-2">
+                  <div className="flex gap-1 items-center">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border">
+                      <img
+                        src={UserInfo.UserProfileUrl}
+                        alt="ProfileIcon"
+                        className=""
+                      />
+                    </div>
+                    <span className="text-sm">{UserInfo.userName}</span>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+            <Circle
+              center={handlerLocation}
+              radius={100}
+              color="#2d3748"
+              fillColor="#2d3748"
+              fillOpacity={0.4}
+            />
+          </>
+        )}
       </MapContainer>
     </>
   )

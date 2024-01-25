@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Outlet, json, useNavigate} from "react-router-dom"
-import MenuIco from "../../../assets/search.svg"
+import MenuIco from "../../../assets/menu.svg"
 import ProfileIco from "../../../assets/profile.svg"
 import Card from "../../ReUsable/Card"
 import Button from "../../ReUsable/Button"
@@ -11,14 +11,16 @@ import {firebaseConfig} from "../../Auth/firebase.config"
 import {provider, auth} from "../../Auth/firebase.config"
 import {getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth"
 
-const Menu = () => {
+const Menu = ({handlerOpenMenu}) => {
   const [isLogedIn, setIsLogedIn] = useState(false)
   const [query, setQuery] = useState(null)
   localStorage.setItem("isAuth", isLogedIn)
   const Navigate = useNavigate()
   const [profileCard, setProfileCard] = useState(false)
+  const [isLogging, setIsLogging] = useState(false)
 
   const handlerLoginWithGoogle = async () => {
+    setIsLogging(true)
     signInWithPopup(auth, provider)
       .then((response) => {
         if (response.user) {
@@ -30,10 +32,14 @@ const Menu = () => {
             UserStatus: 1,
           }
           localStorage.setItem("UserInfo", JSON.stringify(ProfileData))
-          Navigate("/")
+          document.location = document.location
+          setIsLogging(false)
         }
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        setIsLogging(false)
+        console.log(e)
+      })
   }
   const UserInfo = JSON.parse(localStorage.getItem("UserInfo"))
 
@@ -57,8 +63,12 @@ const Menu = () => {
         <div className="flex justify-between">
           <div>
             <Card>
-              <button className="border-0 bg-none">
-                <img src={MenuIco} alt="menuIcon" className="w-4 opacity-50" />
+              <button className="border-0 bg-none" onClick={handlerOpenMenu}>
+                <img
+                  src={MenuIco}
+                  alt="menuIcon"
+                  className="w-4 cursor-pointer opacity-50 ml-2"
+                />
               </button>
               <div className="">
                 <input
@@ -77,12 +87,13 @@ const Menu = () => {
                 <Button
                   className="bg-zinc-800 text-white flex items-center gap-1"
                   onClick={handlerLoginWithGoogle}
+                  disabled={isLogging}
                 >
                   <img
                     className="w-5"
                     src="https://www.svgrepo.com/show/475656/google-color.svg"
                   />
-                  <span>Login</span>
+                  <span>{!isLogging ? "Login" : "Logging in..."}</span>
                 </Button>
               </div>
             </Card>
@@ -103,7 +114,7 @@ const Menu = () => {
                     className={`absolute top-14 flex-col justify-center items-center bg-zinc-800 p-3 rounded-lg border-2 border-white/10 duration-300 gap-3 flex transform ${
                       profileCard
                         ? "flex visible opacity-100"
-                        : "opacity-0 invisible"
+                        : "opacity-0 invisible top-16"
                     }`}
                   >
                     <Card className="shadow-none">
@@ -115,7 +126,7 @@ const Menu = () => {
                           className=""
                         />
                       </div>
-                      <div className="text-white text-bqse space-y-2">
+                      <div className="text-white text-base space-y-2">
                         <div>{UserInfo.userName}</div>
                         <div>
                           <Button onClick={HandlerLogOut}>Log out</Button>

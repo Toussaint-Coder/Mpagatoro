@@ -2,36 +2,30 @@ import React, {useReducer, useState} from "react"
 import Card from "../ReUsable/Card"
 import Pump from "../../assets/pump.svg"
 import CarIco from "../../assets/car.svg"
-import Arrow from "../../assets/arrow.svg"
+import Arrow from "../../assets/close-circle.svg"
 import Button from "../ReUsable/Button"
 import {stations} from "../stations/stations.js"
 
-const Active = ({handlerStationLocation}) => {
-  const [isClaused, setIsClaused] = useReducer((state) => {
-    if (state === true) {
-      return false
-    } else {
-      return true
-    }
-  }, false)
+const Active = ({handlerStationLocation, HandlerClosed, className}) => {
   const getPositionCoords = (stationCoodrs) => {
     handlerStationLocation(stationCoodrs)
   }
 
   return (
     <Card
-      className={`flex-col ${
-        isClaused ? "max-h-12" : "max-h-80"
-      } duration-300 max-w-xs w-full h-full absolute bottom-4 p-3 left-4 bg-red-500 z-20 rounded-lg justify-start items-start shadow overflow-hidden`}
+      className={`flex-col duration-300 max-w-xs w-full h-full absolute bottom-4 p-3 z-30   top-0 bg-red-500 rounded-none justify-start items-start shadow overflow-hidden ${className}`}
     >
       <div className="w-full flex items-center justify-between">
         <div>
           <p className="text-white">opened Stations</p>
         </div>
         <div>
-          <Button className="bg-zinc-700" onClick={setIsClaused}>
-            <img src={Arrow} alt="icon" className="w-4" />
-          </Button>
+          <img
+            src={Arrow}
+            alt="icon"
+            className="w-8 cursor-pointer"
+            onClick={HandlerClosed}
+          />
         </div>
       </div>
       <div className="h-full w-full space-y-4 overflow-auto scroll-sm thumb-sm">

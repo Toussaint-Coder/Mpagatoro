@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useReducer, useState} from "react"
 import Map from "./map/Map"
 import {Outlet} from "react-router-dom"
 import Menu from "./menu/Menu"
@@ -13,6 +13,7 @@ const Home = () => {
   })
   const [state, setState] = useState(null)
   const [addedLocation, setAddedLocation] = useState(null)
+  const [OpenMenuHandler, setOpenMenuHandler] = useState()
 
   useEffect(() => {
     const getLocation = () => {
@@ -39,11 +40,24 @@ const Home = () => {
 
   const getCoords = (stationCoords) => {
     setAddedLocation(stationCoords)
+    console.log(isClaused)
+  }
+  //menu animation
+
+  const [isClaused, setIsClaused] = useReducer((state) => {
+    if (state === true) {
+      return false
+    } else {
+      return true
+    }
+  }, true)
+  const handlerActive = () => {
+    setIsClaused()
+    console.log(isClaused)
   }
   return (
     <>
-      <Menu />
-
+      <Menu handlerOpenMenu={handlerActive} />
       <div className="w-full h-screen overflow-hidden bg-zinc-800 flex items-center justify-center relative">
         {state === "error" && <Error />}
         {state === null && <Loading />}
@@ -53,7 +67,11 @@ const Home = () => {
             HandlerAddedLOcation={addedLocation}
           />
         )}
-        <Active handlerStationLocation={getCoords} />
+        <Active
+          handlerStationLocation={getCoords}
+          HandlerClosed={handlerActive}
+          className={`flex-col ${isClaused ? "-left-[22rem]" : "left-0"}`}
+        />
       </div>
       <Outlet />
     </>
