@@ -39,6 +39,7 @@ const Menu = ({handlerOpenMenu}) => {
       .catch((e) => {
         setIsLogging(false)
         console.log(e)
+        document.location = document.location
       })
   }
   const UserInfo = JSON.parse(localStorage.getItem("UserInfo"))
