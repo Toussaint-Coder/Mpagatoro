@@ -55,7 +55,7 @@ const Map = ({handlerLocation, HandlerAddedLOcation}) => {
   return (
     <>
       <Button
-        className="absolute bottom-4 right-4 z-30 text-white bg-zinc-700 px-4 py-2 flex items-center gap-2"
+        className="absolute top-[5rem] left-4 z-30 text-white bg-zinc-800 px-4 py-2 flex items-center gap-2"
         onClick={ScrollToLocation}
       >
         <span>Find Me</span>
